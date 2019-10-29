@@ -31,15 +31,24 @@ server.get('/now', (req, res) => {
 //
 // db.find() returns them all.
 // 
-server.get('/hubs', (req, res) => {
-    db.find()
-    .then(hubs => {
+// server.get('/hubs', (req, res) => {
+//     db.find()
+//     .then(hubs => {
+//         res.status(200).json(hubs);
+//     })
+//     .catch(err => {
+//         res.status(500).json({sucess:false, err});
+//     });
+// });
+
+server.get('/hubs', async (req, res) => {
+    try {
+        const hubs = await db.find();
         res.status(200).json(hubs);
-    })
-    .catch(err => {
-        res.status(500).json({sucess:false, err});
-    });
-});
+    } catch (err) {
+        res.status(500).json({success:false, err});
+    }
+})
 
 //
 // notice the "parameter" in the url...
